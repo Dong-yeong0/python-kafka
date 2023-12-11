@@ -1,0 +1,32 @@
+{
+    "version": "0.1.0",
+    "configurations": [
+        {
+            "name": "Producer",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/python/producer",
+            "env": {
+                "KAFKA_HOST":"localhost",
+                "KAFKA_PORT":"2001",
+                "KAFKA_ID":"admin",
+                "KAFKA_PASSWORD":"pass@123",
+                "KAFKA_TOPIC":"test-topic",
+            },
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Consumer",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/python/consumer",
+            "env": {
+                "KAFKA_HOST":"localhost",
+                "KAFKA_PORT":"2001",
+                "KAFKA_TOPIC":"test-topic",
+                "KAFKA_CONSUMER_GROUP_ID":"test-group-user",
+            },
+            "console": "integratedTerminal"
+        }
+    ]
+}
