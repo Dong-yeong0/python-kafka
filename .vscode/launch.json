@@ -9,8 +9,8 @@
             "env": {
                 "KAFKA_HOST":"localhost",
                 "KAFKA_PORT":"2001",
-                "KAFKA_ID":"admin",
-                "KAFKA_PASSWORD":"pass@123",
+                "KAFKA_USERNAME":"kafka",
+                "KAFKA_PASSWORD":"1234",
                 "KAFKA_TOPIC":"test-topic",
             },
             "console": "integratedTerminal"
@@ -23,6 +23,8 @@
             "env": {
                 "KAFKA_HOST":"localhost",
                 "KAFKA_PORT":"2001",
+                "KAFKA_USERNAME":"kafka",
+                "KAFKA_PASSWORD":"1234",
                 "KAFKA_TOPIC":"test-topic",
                 "KAFKA_CONSUMER_GROUP_ID":"test-group-user",
             },
