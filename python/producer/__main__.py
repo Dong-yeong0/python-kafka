@@ -16,13 +16,12 @@ if __name__ == "__main__":
         producer = KafkaProducer(
             bootstrap_servers=f"{os.environ.get('KAFKA_HOST')}:{os.environ.get('KAFKA_PORT')}",
             compression_type="gzip",
-            api_version=(0,11,5),
             key_serializer=lambda v: str(v).encode("utf-8"),
             value_serializer=lambda x: json.dumps(x).encode("utf-8"),
             security_protocol="SASL_PLAINTEXT",
             sasl_mechanism="PLAIN",
-            sasl_plain_username="admin",
-            sasl_plain_password="1234",
+            sasl_plain_username=os.environ.get("KAFKA_USERNAME"),
+            sasl_plain_password=os.environ.get("KAFKA_PASSWORD"),
             acks="all",
         )
         topic_generator = generate_message()
