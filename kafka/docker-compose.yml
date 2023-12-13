@@ -18,7 +18,8 @@ services:
       - "2001:2001"
     environment:
       KAFKA_BROKER_ID: 1
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+      # KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+      KAFKA_NUM_PARTITIONS: 3
       KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
       ZOOKEEPER_SASL_ENABLED: 'false'
       KAFKA_ADVERTISED_LISTENERS: LISTENER_DOCKER_INTERNAL://kafka:12001,LISTENER_DOCKER_EXTERNAL://localhost:2001      # 외부접속은 External url을 변경하시면 됩니다. (Domain name or IP address)
