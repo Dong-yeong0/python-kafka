@@ -3,7 +3,7 @@
 ## Single Broker
 
 ```shell
-docker-compose -f docker-compose-single-broker.yml up -d
+docker-compose up -d
 ```
 
 ## Multi Brokers (3broker, 1 zookeeper)
