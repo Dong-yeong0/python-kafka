@@ -1,6 +1,6 @@
 import os
 import psycopg2
-from psycopg2 import pool, extras
+from psycopg2 import pool, extras, errors
 
 pg_connection_params = {
     "user": os.environ.get("POSTGRES_USER"),
@@ -24,3 +24,20 @@ def create_connection_pool(
 
 def put_conn(pool, conn):
     pool.putconn(conn)
+
+
+def insert_messages(conn, cur, message_list: list)->bool:
+    insert_query = "INSERT INTO messages (data) VALUES %s"
+    insert_args = [(message["data"], ) for message in message_list]
+    try:
+        extras.execute_values(cur, insert_query, insert_args)
+        print(cur.query.decode())
+        print(
+            f"insert data: {insert_args}"
+        )
+    except errors.DatabaseError as e:
+        print(e)
+        return False
+    else:
+        conn.commit()
+        return True
