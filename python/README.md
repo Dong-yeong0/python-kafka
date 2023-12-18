@@ -20,3 +20,7 @@ virtualenv venv
 
 .\venv\Scripts\Activate.ps1
 ```
+
+## Run
+
+> Visual studio code: F5
