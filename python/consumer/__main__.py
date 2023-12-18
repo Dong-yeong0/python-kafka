@@ -4,6 +4,40 @@ import json
 from kafka.consumer import KafkaConsumer
 from db.postgres import create_connection_pool, put_conn, insert_messages
 
+def process_and_insert_messages(consumer):
+    while True:
+        msg_pack = consumer.poll(timeout_ms=3_000)
+        converted_messages = [
+            {
+                "topic": tp.topic,
+                "partition": tp.partition,
+                "key": message.key,
+                "offset": message.offset,
+                "data": message.value
+            }
+            for tp, messages in msg_pack.items()
+            for message in messages
+        ]
+
+        for msg in converted_messages:
+            print(
+                f"Received message from topic '{msg['topic']}'\n"
+                f"Partition {msg['partition']}\nKey: {msg['key']}\nOffset {msg['offset']}\nData: {json.dumps(msg['data'], indent=2)}\n"
+            )
+
+
+        insert_values = [msg["data"] for msg in converted_messages]
+        if insert_values != []:
+            pg_connection_pool = create_connection_pool()
+            conn = pg_connection_pool.getconn()
+            cur = conn.cursor()
+            if insert_messages(conn, cur, insert_values):
+                consumer.commit()
+            else:
+                print("Failed to insert messages")
+            put_conn(pg_connection_pool, conn)
+            cur.close()
+
 if __name__ == "__main__":
     consumer = KafkaConsumer(
         os.environ.get("KAFKA_TOPIC"),
@@ -22,18 +56,4 @@ if __name__ == "__main__":
         max_poll_records=1_000,
     )
 
-    while True:
-        msg_pack = consumer.poll(timeout_ms=3_000)
-        for tp, messages in msg_pack.items():
-            for message in messages:
-                print(
-                    f"Received message from topic '{tp.topic}'\n"
-                    f"Partition {tp.partition}\nKey: {message.key}\nOffset {message.offset}\nData: {json.dumps(message.value, indent=2)}\n"
-                )
-
-        # pg_connection_pool = create_connection_pool()
-        # conn = pg_connection_pool.getconn()
-        # cur = conn.cursor()
-        # insert_messages(conn, cur, msg_pack)
-        # put_conn(pg_connection_pool, conn)
-        # cur.close()
+    process_and_insert_messages(consumer)

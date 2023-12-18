@@ -3,11 +3,11 @@ import psycopg2
 from psycopg2 import pool, extras, errors
 
 pg_connection_params = {
-    "user": os.environ.get("POSTGRES_USER"),
-    "password": os.environ.get("POSTGRES_PASSWORD"),
     "host": os.environ.get("POSTGRES_HOST"),
     "port": os.environ.get("POSTGRES_PORT"),
-    "database": os.environ.get("POSTGRES_NAME"),
+    "user": os.environ.get("POSTGRES_USER"),
+    "password": os.environ.get("POSTGRES_PASSWORD"),
+    "database": os.environ.get("POSTGRES_DB"),
 }
 
 def create_connection_pool(
@@ -35,7 +35,7 @@ def insert_messages(conn, cur, message_list: list)->bool:
         print(
             f"insert data: {insert_args}"
         )
-    except errors.DatabaseError as e:
+    except Exception as e:
         print(e)
         return False
     else:
