@@ -2,10 +2,11 @@
     "version": "0.1.0",
     "configurations": [
         {
+            "cwd": "${workspaceRoot}/python",
             "name": "Producer",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/python/producer",
+            "program": "producer",
             "env": {
                 "KAFKA_HOST":"localhost",
                 "KAFKA_PORT":"2001",
@@ -16,10 +17,11 @@
             "console": "integratedTerminal"
         },
         {
+            "cwd": "${workspaceRoot}/python",
             "name": "Consumer",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/python/consumer",
+            "program": "consumer",
             "env": {
                 "KAFKA_HOST":"localhost",
                 "KAFKA_PORT":"2001",
