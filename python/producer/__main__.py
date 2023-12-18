@@ -33,5 +33,4 @@ if __name__ == "__main__":
             print(f"Sent message to topic: {message }")
     except errors.KafkaError as ke:
         print(f"KafkaError: {ke}")
-    finally:
-        producer.close()  # Always close the producer when done
+
