@@ -21,6 +21,13 @@ virtualenv venv
 .\venv\Scripts\Activate.ps1
 ```
 
+## Install packages
+
+```shell
+# when you enable venv, "venv" is displayed on the far left side of the shell
+(venv) pip install -r requirements.txt
+```
+
 ## Run
 
 > Visual studio code: F5
